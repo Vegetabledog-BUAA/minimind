@@ -3,7 +3,7 @@ import struct
 import inspect
 import time
 
-from LMConfig import LMConfig
+from .LMConfig import LMConfig
 from typing import Any, Optional, Tuple, List
 import numpy as np
 import torch

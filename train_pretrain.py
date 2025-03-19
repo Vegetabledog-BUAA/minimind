@@ -233,9 +233,9 @@ if __name__ == "__main__":
     parser.add_argument("--log_interval", type=int, default=100)  # 日志记录间隔
     parser.add_argument("--save_interval", type=int, default=100)  # 模型保存间隔
     parser.add_argument('--local_rank', type=int, default=-1)  # 本地进程排名，分布式训练使用
-    parser.add_argument('--dim', default=512, type=int)  # 模型隐藏层维度
-    parser.add_argument('--n_layers', default=12, type=int)  # 模型层数
-    parser.add_argument('--max_seq_len', default=1024, type=int)  # 最大序列长度
+    parser.add_argument('--dim', default=128, type=int)  # 模型隐藏层维度
+    parser.add_argument('--n_layers', default=4, type=int)  # 模型层数
+    parser.add_argument('--max_seq_len', default=512, type=int)  # 最大序列长度
     parser.add_argument('--use_moe', default=False, type=bool)  # 是否使用MoE(混合专家模型)结构
     parser.add_argument("--data_path", type=str, default="./dataset/pretrain_hq.jsonl")  # 预训练数据路径
     args = parser.parse_args()
