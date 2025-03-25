@@ -227,17 +227,17 @@ if __name__ == "__main__":
     parser.add_argument("--wandb_project", type=str, default="MiniMind-Pretrain")  # W&B项目名
     parser.add_argument("--num_workers", type=int, default=1)  # 数据加载工作线程数
     parser.add_argument("--ddp", action="store_true")  # 是否启用分布式训练
-    parser.add_argument("--accumulation_steps", type=int, default=8)  # 梯度累积步数，用于增大"等效批次大小"
+    parser.add_argument("--accumulation_steps", type=int, default=16)  # 梯度累积步数，用于增大"等效批次大小"
     parser.add_argument("--grad_clip", type=float, default=1.0)  # 梯度裁剪阈值
     parser.add_argument("--warmup_iters", type=int, default=0)  # 预热迭代次数
-    parser.add_argument("--log_interval", type=int, default=100)  # 日志记录间隔
-    parser.add_argument("--save_interval", type=int, default=100)  # 模型保存间隔
+    parser.add_argument("--log_interval", type=int, default=200)  # 日志记录间隔
+    parser.add_argument("--save_interval", type=int, default=200)  # 模型保存间隔
     parser.add_argument('--local_rank', type=int, default=-1)  # 本地进程排名，分布式训练使用
-    parser.add_argument('--dim', default=128, type=int)  # 模型隐藏层维度
-    parser.add_argument('--n_layers', default=4, type=int)  # 模型层数
+    parser.add_argument('--dim', default=512, type=int)  # 模型隐藏层维度
+    parser.add_argument('--n_layers', default=16, type=int)  # 模型层数
     parser.add_argument('--max_seq_len', default=512, type=int)  # 最大序列长度
     parser.add_argument('--use_moe', default=False, type=bool)  # 是否使用MoE(混合专家模型)结构
-    parser.add_argument("--data_path", type=str, default="./dataset/pretrain_hq.jsonl")  # 预训练数据路径
+    parser.add_argument("--data_path", type=str, default="./dataset/pretrain_hq_joint.jsonl")  # 预训练数据路径
     args = parser.parse_args()
 
     # 创建模型配置

@@ -35,7 +35,11 @@ class PretrainDataset(Dataset):
         sample = self.samples[index]
 
         # 构建输入文本
-        text = f"{self.tokenizer.bos_token}{str(sample['text'])}{self.tokenizer.eos_token}"
+        # 首先匹配文本中是否有起始和终止token，如果没有则添加
+        text = sample['text']
+        match = re.match(r'(?:<s>|</s>)', text)
+        if not match:
+            text = f"{self.tokenizer.bos_token}{text}{self.tokenizer.eos_token}"
         encoding = self.tokenizer(
             text,
             max_length=self.max_length,
