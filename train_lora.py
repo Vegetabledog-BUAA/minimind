@@ -156,7 +156,7 @@ if __name__ == "__main__":
         wandb = None
 
     model, tokenizer = init_model(lm_config)
-    apply_lora(model)
+    apply_lora(model) # 为模型添加 LoRA并初始化
 
     total_params = sum(p.numel() for p in model.parameters())  # 总参数数量
     lora_params_count = sum(p.numel() for name, p in model.named_parameters() if 'lora' in name)  # LoRA 参数数量
@@ -165,16 +165,15 @@ if __name__ == "__main__":
         print(f"LoRA 参数量: {lora_params_count}")
         print(f"LoRA 参数占比: {lora_params_count / total_params * 100:.2f}%")
 
-    for name, param in model.named_parameters():
-        if 'lora' not in name:
-            param.requires_grad = False
     lora_params = []
     for name, param in model.named_parameters():
         if 'lora' in name:
             lora_params.append(param)
+        else:
+            param.requires_grad = False
 
     # 只对 LoRA 参数进行优化
-    optimizer = optim.AdamW(lora_params, lr=args.learning_rate)
+    optimizer = optim.AdamW(lora_params, lr=args.learning_rate) # 只优化 LoRA 参数
     train_ds = SFTDataset(args.data_path, tokenizer, max_length=lm_config.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(
